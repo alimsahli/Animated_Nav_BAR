@@ -1,0 +1,100 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    body{
+        display: grid;
+        place-items: center;
+        width: 100%;
+        height: 100vh;
+        background-color: #000;
+        color:#adb5bd;
+        font-family: sans-serif;
+        input[type="checkbox"]{
+            display: none;
+        }
+    }    
+}
+
+$width:100px;
+$height:20px;
+$margin:10px;
+$time:1s;
+$font-size:18px;
+//template 
+@mixin flex($dir,$jus,$ali){
+    display: flex;
+    flex-direction:$dir;
+    justify-content: $jus;
+    align-items: $ali;
+}
+
+
+.lines{
+    z-index:1;
+    cursor: pointer;
+    [class ^="line-"]{
+        width: $width;
+        height: $height;
+        background-color: #fff;
+        margin: $margin 0;
+        transition: all $time ease;
+    }
+}
+
+#menu-active:checked ~ label{
+    .line-1{
+        transform: translateY($height+$margin) rotate(45deg)
+    }
+    .line-2{
+        transform: scale(0)
+    }
+    .line-3{
+        transform: translateY(-($height+$margin))rotate(-45deg)
+    }
+}
+
+.menu{
+    @include flex(row,null,null)
+}
+label{
+    @include flex(row,null ,null )  
+}
+.items{
+    z-index: 0;
+    @include flex(row,center,center);
+    font-size: $font-size;
+    font-weight: 600;
+    transition: all $time ease;
+    [class^="i-"]{
+        margin: 0 $margin;
+        cursor: pointer;
+        transition: all .5s ease;
+        &:hover{
+            color: white;
+        }
+    }
+}
+
+.first{
+    transform: translateX(100px);
+     opacity:0;
+     pointer-events: none;
+}
+.last{
+    transform: translateX(100px);
+    opacity:0;
+    pointer-events: none;
+}
+#menu-active:checked{
+    & ~ .first{
+        transform: translateX(0px);
+        opacity:100%;
+        pointer-events: auto;
+    }
+    & ~ .last{
+        transform: translateX(0px);
+        opacity:100%;
+        pointer-events: auto;
+    }
+}
